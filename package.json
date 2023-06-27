@@ -3,8 +3,10 @@
   "description": "A Discord bot",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.js",
+    "postinstall": "npm install ytdl-core"
   },
+  
   "dependencies": {
     "@discordjs/voice": "^0.16.0",
     "discord.js": "^14.11.0",
