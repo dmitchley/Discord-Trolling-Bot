@@ -18,8 +18,6 @@ const client = new Client({
   ],
 });
 
-const player = createAudioPlayer();
-
 client.on("ready", () => {
   console.log(`Logged in as ${client.user.tag}!`);
 });
@@ -45,6 +43,8 @@ client.on("voiceStateUpdate", async (oldState, newState) => {
         guildId: newState.guild.id,
         adapterCreator: newState.guild.voiceAdapterCreator,
       });
+
+      const player = createAudioPlayer();
 
       const playStream = () => {
         const stream = ytdl(youtubeURL, { filter: "audioonly" });
