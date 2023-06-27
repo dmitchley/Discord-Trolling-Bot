@@ -8,6 +8,8 @@ const {
   createAudioResource,
   AudioPlayerStatus,
   createAudioPlayer,
+  entersState,
+  VoiceConnectionStatus,
 } = require("@discordjs/voice");
 
 const client = new Client({
@@ -46,21 +48,19 @@ client.on("voiceStateUpdate", async (oldState, newState) => {
 
       const player = createAudioPlayer();
 
-      const playStream = () => {
+      async function play() {
         const stream = ytdl(youtubeURL, { filter: "audioonly" });
         const resource = createAudioResource(stream);
         player.play(resource);
-      };
 
-      playStream();
-
-      player.on(AudioPlayerStatus.Idle, () => {
-        console.log("Audio finished, restarting...");
-        playStream();
-      });
+        await entersState(player, AudioPlayerStatus.Idle, 5e3);
+        play();
+      }
 
       connection.subscribe(player);
+      play();
 
+      await entersState(connection, VoiceConnectionStatus.Ready, 30e3);
       console.log("Connected to the voice channel successfully!");
     } catch (error) {
       console.error("Failed to join the voice channel: ", error);
