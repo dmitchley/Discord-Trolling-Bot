@@ -1,3 +1,6 @@
+// Jonno#1716
+// YeOldieMeatPie#4313
+
 const ytdl = require("ytdl-core");
 const { Client, GatewayIntentBits } = require("discord.js");
 const {
@@ -21,11 +24,8 @@ client.on("ready", () => {
   console.log(`Logged in as ${client.user.tag}!`);
 });
 
-// Jonno#1716
-// YeOldieMeatPie#4313
-
 client.on("voiceStateUpdate", async (oldState, newState) => {
-  const specificUserTag = "Jonno#1716";
+  const specificUserTag = "YeOldieMeatPie#4313";
   const youtubeURL = "https://www.youtube.com/shorts/m57W5AkmgiU";
 
   console.log(
@@ -46,13 +46,17 @@ client.on("voiceStateUpdate", async (oldState, newState) => {
         adapterCreator: newState.guild.voiceAdapterCreator,
       });
 
-      const stream = ytdl(youtubeURL, { filter: "audioonly" });
-      const resource = createAudioResource(stream);
-      player.play(resource);
+      const playStream = () => {
+        const stream = ytdl(youtubeURL, { filter: "audioonly" });
+        const resource = createAudioResource(stream);
+        player.play(resource);
+      };
+
+      playStream();
 
       player.on(AudioPlayerStatus.Idle, () => {
         console.log("Audio finished, restarting...");
-        player.play(resource);
+        playStream();
       });
 
       connection.subscribe(player);
