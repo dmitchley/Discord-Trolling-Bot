@@ -25,7 +25,7 @@ client.on("ready", () => {
 });
 
 client.on("voiceStateUpdate", async (oldState, newState) => {
-  const specificUserTag = "YeOldieMeatPie#4313";
+  const specificUserTag = "Jonno#1716";
   const youtubeURL = "https://www.youtube.com/shorts/m57W5AkmgiU";
 
   console.log(
